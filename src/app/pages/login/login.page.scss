@@ -1,0 +1,14 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; 
+  align-items: center;         
+}
+
+.custom-card {
+  width: calc(100% - 10px);  /* Ocupa todo el ancho menos un pequeño margen */
+  margin: 5px auto;          /* 5px arriba/abajo y centrado horizontal */
+  border-radius: 12px;       /* Esquinas redondeadas */
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15); /* Sombra suave */
+  padding: 1rem;             /* Espacio interno */
+}

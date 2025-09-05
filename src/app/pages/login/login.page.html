@@ -1,0 +1,40 @@
+<ion-content class="ion-padding">
+
+  <ion-card class="ion-text-center">
+    <img src="assets/icon/news.png" alt="logo" />
+  </ion-card>
+
+  <ion-card class="custom-card">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <app-input
+        label="Email"
+        type="email"
+        formControlName="email"
+        placeholder="email@email.com">
+      </app-input>
+
+      <app-input
+        label="Password"
+        type="password"
+        formControlName="password"
+        placeholder="********">
+      </app-input>
+
+      <div class="ion-text-center" style="margin-top: 1rem;">
+        <app-link 
+          text="¿Don't have an account? Register"
+          route="/profile"
+          align="center">
+        </app-link>
+      </div>
+
+      <app-button
+        text="Login"
+        type="submit"
+        expand="block"
+        [disabled]="loginForm.invalid">
+      </app-button>
+    </form>
+  </ion-card>
+
+</ion-content>

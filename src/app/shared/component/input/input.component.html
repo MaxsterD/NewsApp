@@ -1,0 +1,16 @@
+<ion-item class="custom-input-item">
+  <ion-input
+    class="custom-input"
+    [type]="type"
+    [value]="value"
+    [label]="label"
+    [labelPlacement]="labelPlacement"
+    [placeholder]="placeholder"
+    [disabled]="disabled"
+    (ionInput)="handleInput($event)">
+      <ion-input-password-toggle 
+        slot="end" 
+        *ngIf="type === 'password'">
+      </ion-input-password-toggle>
+  </ion-input>
+</ion-item>

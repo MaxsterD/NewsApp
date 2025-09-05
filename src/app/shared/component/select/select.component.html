@@ -1,0 +1,16 @@
+<ion-item class="custom-input-item">
+  <ion-select
+    class="custom-input"
+    [label]="label"
+    labelPlacement="stacked"
+    [interface]="interface"
+    (ionChange)="onSelect($event)"
+  >
+    <ion-select-option
+      *ngFor="let option of options"
+      [value]="option"
+    >
+      {{ option[displayKey] }}
+    </ion-select-option>
+  </ion-select>
+</ion-item>
