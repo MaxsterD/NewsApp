@@ -32,14 +32,14 @@ export class LoginPage implements OnInit {
       const user = this.userService.login(email, password);
 
       if (!user) {
-        this.toast.show('Correo o contraseña incorrectos ❌', 'danger');
+        this.toast.show('Correo o contraseña incorrectos', 'danger');
         return;
       }
 
-      this.toast.show(`Bienvenido ${user.name} ✅`, 'success');
+      this.toast.show(`Bienvenido ${user.name} `, 'success');
       console.log("Usuario logueado:", user);
 
-      // this.router.navigate(['/home']);
+      this.router.navigate(['/home']);
       
     } finally {
       this.isSubmitting = false;
@@ -47,6 +47,6 @@ export class LoginPage implements OnInit {
   }
     
     goRegister() {
-      this.router.navigate(['/profile']);
+      this.router.navigate(['/profile/register']);
     }
   }

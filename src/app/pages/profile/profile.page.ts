@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { CountryApiResponse, ICountry, ICountrySelect } from 'src/app/interfaces/icountry';
 import { Iuser } from 'src/app/interfaces/iuser';
 import { Toast } from 'src/app/providers/toast/toast';
+import { Auth } from 'src/app/service/auth/auth';
 import { HttpService } from 'src/app/service/http/http-service';
 import { User } from 'src/app/service/user/user';
 
@@ -16,25 +17,26 @@ import { User } from 'src/app/service/user/user';
 export class ProfilePage implements OnInit {
   countries: ICountrySelect[] = [];
   buttonText: string = "Register";
-  nameCountry: string = "";
   profileForm!: FormGroup;
   isSubmitting = false;
+  currentUser: Iuser | null = null;
 
-  customPopoverOptions = {
-    header: 'Hair Color',
-    subHeader: 'Select your hair color',
-    message: 'Only select your dominant hair color',
-  };
-
-  constructor(private formController: FormBuilder, private toast: Toast, private router: Router,private httpService: HttpService,private userService: User) {}
+  constructor(
+    private formController: FormBuilder, 
+    private toast: Toast, 
+    private router: Router,
+    private httpService: HttpService,
+    private userService: User,
+    private authService: Auth) {}
   
   
   async ngOnInit() {
 
     this.profileForm = this.formController.group({
+      id: [''],
       name: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
-      country: ['', [Validators.required]], // <-- null inicialmente
+      country: ['', [Validators.required]], 
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
       confirmPassword: ['', [Validators.required]],
@@ -56,6 +58,20 @@ export class ProfilePage implements OnInit {
       console.error('Error fetching countries', err);
     }
     
+    this.currentUser = this.authService.getCurrentUser();
+    if (this.currentUser) {
+      this.buttonText = "Update";
+      this.profileForm.patchValue({
+        id: this.currentUser.id,
+        name: this.currentUser.name,
+        lastName: this.currentUser.lastName,
+        country: this.currentUser.country,
+        email: this.currentUser.email,
+        //password: this.currentUser.password, 
+        //confirmPassword: this.currentUser.password,
+      });
+    }
+
   }
 
   async onSubmit() {
@@ -66,7 +82,7 @@ export class ProfilePage implements OnInit {
     const confirmPassword = this.profileForm.get('confirmPassword')?.value;
 
     if (password !== confirmPassword) {
-      this.toast.show('Las contraseñas no coinciden ❌', 'danger');
+      this.toast.show('Las contraseñas no coinciden', 'danger');
       this.isSubmitting = false;
       return;
     }
@@ -75,7 +91,7 @@ export class ProfilePage implements OnInit {
       await new Promise(r => setTimeout(r, 2000));
 
       const user: Iuser = {
-        id: '', // se generará en register
+        id: this.currentUser ? this.currentUser.id : '',
         name: this.profileForm.get('name')?.value,
         lastName: this.profileForm.get('lastName')?.value,
         email: this.profileForm.get('email')?.value,
@@ -83,13 +99,46 @@ export class ProfilePage implements OnInit {
         country: this.profileForm.get('country')?.value,
       };
 
-      const res = this.userService.register(user);
+      if (this.currentUser) {
+        const users: Iuser[] = this.userService.getAllUsers() || [];
 
-      this.toast.show('Registro exitoso ✅', 'success');
-      console.log("Registrado1:", res);
-      console.log("Registrado:", user);
+        const exists = users.some(
+          u => u.email === user.email && u.id !== this.currentUser?.id
+        );
 
-      this.profileForm.reset();
+        if (exists) {
+          this.toast.show('Ese correo ya está en uso', 'danger');
+          this.isSubmitting = false;
+          return;
+        }
+
+        const updated = this.userService.updateUser(user);
+
+        if (updated) {
+          this.toast.show('Perfil actualizado', 'success');
+          this.router.navigate(['/home']);
+        } else {
+          this.toast.show('Error al actualizar', 'danger');
+        }
+      }else{
+        const users: Iuser[] = this.userService.getAllUsers() || [];
+        const exists = users.some(u => u.email === user.email);
+
+        if (exists) {
+          this.toast.show('El correo ya está registrado', 'danger');
+          return;
+        }
+
+        const res = this.userService.register(user);
+
+        this.toast.show('Registro exitoso', 'success');
+        console.log("Registrado1:", res);
+        console.log("Registrado:", user);
+
+        this.profileForm.reset();
+
+        this.router.navigate(['/login']);
+      }
 
     } catch (error) {
       console.error("Error en registro", error);

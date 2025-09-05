@@ -87,6 +87,10 @@ export class User {
     return false;
   }
 
+  public getAllUsers(): Iuser[] {
+    const users: Iuser[] = this.storage.getItem(this.USER_KEY) || [];
+    return Array.isArray(users) ? users : [];
+  }
 }
 
 
