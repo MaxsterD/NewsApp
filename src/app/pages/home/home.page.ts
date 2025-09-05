@@ -64,15 +64,12 @@ export class HomePage implements OnInit {
     this.loading = true;
 
     const url = 'https://newsapi.org/v2/top-headlines';
-    const headers = {
-      'X-Api-Key': this.apiKey
-    };
    
     const params = { country: 'us', category: this.selectedCategory };
 
 
     try {
-      const res = await this.httpService.get<INewsResponse>(this.apiUrl, headers, params);
+      const res = await this.httpService.get<INewsResponse>(this.apiUrl, params);
       if (res && res.articles.length > 0) {
         const articlesWithImage = res.articles.filter(a => a.urlToImage);
         if (articlesWithImage.length > 0) {

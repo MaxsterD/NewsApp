@@ -1,5 +1,5 @@
 <ion-content class="ion-padding">
-  <ion-card>
+  <ion-card style="margin-top: 6rem;">
 
     <div class="card-header" *ngIf="currentUser">
       <ion-button fill="clear" color="primary" (click)="goHome()">
@@ -75,8 +75,8 @@
 
       <div class="ion-text-center" style="margin-top: 1rem;" *ngIf="!currentUser">
         <app-link 
-          text="¿Don't have an account? Register"
-          route="/profile/register"
+          text="¿Already have an account? Login"
+          route="/login"
           align="center">
         </app-link>
       </div>
