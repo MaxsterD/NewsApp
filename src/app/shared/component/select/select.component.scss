@@ -1,21 +1,20 @@
-/* Misma base que el input */
+
 .custom-input-item {
-  --background: #f0f0f0df;             /* Fondo gris claro */
+  --background: #f0f0f0df;             
   --padding-start: 1rem;
   --padding-end: 1rem;
-  margin: 0.5rem 0;                     /* Separación vertical */
-  border-radius: 8px;                   /* Esquinas redondeadas */
-  border: 1px solid #b0b0b0;           /* Borde más oscuro que el fondo */
+  margin: 0.5rem 0;                     
+  border-radius: 8px;                   
+  border: 2px solid #b0b0b0;           
 }
 
-/* Ajustes del select para que se vea igual que el input */
+
 .custom-input {
   border-radius: 8px;
-  background-color: #f0f0f0df;
   padding: 0.8rem 1rem;
   height: 3rem;
   font-size: 1rem;
 
   display: flex;
-  align-items: center;                  /* Centrar contenido verticalmente */
+  align-items: center;                  
 }

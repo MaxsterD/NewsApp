@@ -28,10 +28,12 @@
         </app-link>
       </div>
 
-      <app-button
+      <app-button 
         text="Login"
         type="submit"
         expand="block"
+        icon="save-outline"
+        [loading]="isSubmitting"
         [disabled]="loginForm.invalid">
       </app-button>
     </form>

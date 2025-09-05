@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder,FormGroup,Validators  } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Toast } from 'src/app/providers/toast/toast';
+import { User } from 'src/app/service/user/user';
 
 
 @Component({
@@ -13,9 +14,9 @@ import { Toast } from 'src/app/providers/toast/toast';
 export class LoginPage implements OnInit {
   
   loginForm!: FormGroup;
-  passwordVisible = false;
+  isSubmitting = false;
 
-  constructor(private formController: FormBuilder, private toast: Toast, private router: Router) {}
+  constructor(private formController: FormBuilder, private toast: Toast, private router: Router,private userService: User) {}
   ngOnInit() {
     this.loginForm = this.formController.group({
       email: ['', [Validators.required, Validators.email]],
@@ -24,11 +25,28 @@ export class LoginPage implements OnInit {
   }
 
   async onSubmit() {
-    console.log('Datos login:', this.loginForm.value);
-    this.toast.show('Login exitoso ✅','success');
-  }
+    this.isSubmitting = true;
+    const { email, password } = this.loginForm.value;
 
-  goRegister() {
-    this.router.navigate(['/profile']);
+    try {
+      const user = this.userService.login(email, password);
+
+      if (!user) {
+        this.toast.show('Correo o contraseña incorrectos ❌', 'danger');
+        return;
+      }
+
+      this.toast.show(`Bienvenido ${user.name} ✅`, 'success');
+      console.log("Usuario logueado:", user);
+
+      // this.router.navigate(['/home']);
+      
+    } finally {
+      this.isSubmitting = false;
+    }
   }
-}
+    
+    goRegister() {
+      this.router.navigate(['/profile']);
+    }
+  }

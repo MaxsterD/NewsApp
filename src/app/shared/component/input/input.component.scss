@@ -1,18 +1,18 @@
 .custom-input-item {
-  --background: #f0f0f0df;             /* Fondo gris claro */
+  --background: #f0f0f0df;             
   --padding-start: 1rem;               
   --padding-end: 1rem;
-  margin: 0.5rem 0;                     /* Separación entre inputs */
-  border-radius: 8px;                   /* Esquinas redondeadas */
-  border: 1px solid #b0b0b0;           /* Borde completo más opaco que el fondo */
+  margin: 0.5rem 0;                     
+  border-radius: 8px;                   
+  border: 2px solid #b0b0b0;           
 }
 
 .custom-input {
-  border-radius: 8px;                   /* Esquinas redondeadas */
-  background-color: #f0f0f0df;          /* Fondo gris */
+  border-radius: 8px;                   
+  
   padding: 0.8rem 1rem;
   height: 3rem;
-  font-size: 1rem;         /* Borde completo */
+  font-size: 1rem;         
 }
 
 ion-input-password-toggle {

@@ -1,3 +1,10 @@
-<ion-button [type]="type" [expand]="expand" [disabled]="disabled">
+<ion-button [type]="type"
+            [expand]="expand"
+            [disabled]="isDisabled">
+
+  <ion-spinner *ngIf="loading" name="crescent" slot="start"></ion-spinner>
+
+  <ion-icon *ngIf="!loading && icon" [name]="icon" slot="start"></ion-icon>
+
   {{ text }}
 </ion-button>

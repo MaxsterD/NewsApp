@@ -14,7 +14,6 @@ export class SelectComponent {
   @Output() selected = new EventEmitter<any>();
 
   onSelect(event: any) {
-    // event.detail.value es el objeto que seleccionaste
     this.selected.emit(event.detail.value);
   }
 }
