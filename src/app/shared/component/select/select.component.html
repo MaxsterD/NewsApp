@@ -4,12 +4,11 @@
     [label]="label"
     labelPlacement="stacked"
     [interface]="interface"
+    [value]="value"
     (ionChange)="onSelect($event)"
+    [disabled]="disabled"
   >
-    <ion-select-option
-      *ngFor="let option of options"
-      [value]="option"
-    >
+    <ion-select-option *ngFor="let option of options" [value]="option">
       {{ option[displayKey] }}
     </ion-select-option>
   </ion-select>

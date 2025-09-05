@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
+import { Loader } from 'src/app/service/loader/loader';
 
 @Component({
   selector: 'app-link',
@@ -12,11 +13,14 @@ export class LinkComponent  {
   @Input() route: string = '/';          
   @Input() align: 'left' | 'center' | 'right' = 'center'; 
   
-  constructor(private router: Router) {}
+  constructor(private router: Router, private loader: Loader) {}
 
-  navigate() {
+  async navigate() {
+    await this.loader.show('Loading...');
     
-    this.router.navigate([this.route]);
+    this.router.navigate([this.route]).then(() => {
+      setTimeout(() => this.loader.hide(), 500);
+    });
     
   }
 

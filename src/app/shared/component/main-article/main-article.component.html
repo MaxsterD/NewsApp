@@ -1,0 +1,10 @@
+<ion-card *ngIf="title">
+  <img [src]="image" alt="main image" />
+  <ion-card-header>
+    <ion-card-title>{{ title }}</ion-card-title>
+    <ion-card-subtitle>{{ sourceName }}</ion-card-subtitle>
+  </ion-card-header>
+  <ion-card-content>
+    {{ description }}
+  </ion-card-content>
+</ion-card>

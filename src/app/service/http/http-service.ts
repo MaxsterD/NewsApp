@@ -11,7 +11,7 @@ export class HttpService {
 
   constructor(private http: HttpClient) { }
 
-  async get<T>(
+  public async get<T>(
     url: string,
     headers?: { [key: string]: string },
     params?: { [key: string]: string }

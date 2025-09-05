@@ -1,4 +1,4 @@
-import { ICountry } from "./icountry";
+import { ICountryUser } from "./icountry";
 
 export interface Iuser {
     id:       string;
@@ -6,5 +6,5 @@ export interface Iuser {
     lastName: string;
     email:    string;
     password: string;
-    country:  ICountry;
+    country:  ICountryUser;
 }

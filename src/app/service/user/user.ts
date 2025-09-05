@@ -91,6 +91,8 @@ export class User {
     const users: Iuser[] = this.storage.getItem(this.USER_KEY) || [];
     return Array.isArray(users) ? users : [];
   }
+
+  
 }
 
 

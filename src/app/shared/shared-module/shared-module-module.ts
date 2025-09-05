@@ -7,13 +7,26 @@ import { ButtonComponent } from '../component/button/button.component';
 import { LinkComponent } from '../component/link/link.component';
 import { HttpClientModule } from '@angular/common/http';
 import { SelectComponent } from '../component/select/select.component';
+import { HeaderComponent } from '../component/header/header.component';
+import { ArticleComponent } from '../component/article/article.component';
+import { MainArticleComponent } from '../component/main-article/main-article.component';
+import { SideBarComponent } from '../component/side-bar/side-bar.component';
+import { ListComponent } from '../component/list/list.component';
+import { ModalComponent } from '../component/modal/modal.component';
 
 @NgModule({
   declarations: [
     InputComponent,
     ButtonComponent,
     LinkComponent,
-    SelectComponent
+    SelectComponent,
+    HeaderComponent,
+    ArticleComponent,
+    MainArticleComponent,
+    SideBarComponent,
+    ListComponent,
+    ModalComponent
+    
   ],
   imports: [
     CommonModule,
@@ -29,6 +42,12 @@ import { SelectComponent } from '../component/select/select.component';
     ButtonComponent,
     LinkComponent,
     SelectComponent,
+    HeaderComponent,
+    ArticleComponent,
+    MainArticleComponent,
+    SideBarComponent,
+    ListComponent,
+    ModalComponent,
     ReactiveFormsModule,
     HttpClientModule
   ]

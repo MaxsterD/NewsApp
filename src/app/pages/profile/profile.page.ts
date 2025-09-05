@@ -6,6 +6,7 @@ import { Iuser } from 'src/app/interfaces/iuser';
 import { Toast } from 'src/app/providers/toast/toast';
 import { Auth } from 'src/app/service/auth/auth';
 import { HttpService } from 'src/app/service/http/http-service';
+import { Loader } from 'src/app/service/loader/loader';
 import { User } from 'src/app/service/user/user';
 
 @Component({
@@ -27,16 +28,18 @@ export class ProfilePage implements OnInit {
     private router: Router,
     private httpService: HttpService,
     private userService: User,
-    private authService: Auth) {}
+    private authService: Auth,
+    private loader: Loader) {}
   
   
   async ngOnInit() {
 
+    
     this.profileForm = this.formController.group({
       id: [''],
       name: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
-      country: ['', [Validators.required]], 
+      country: [null, [Validators.required]], 
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
       confirmPassword: ['', [Validators.required]],
@@ -60,35 +63,44 @@ export class ProfilePage implements OnInit {
     
     this.currentUser = this.authService.getCurrentUser();
     if (this.currentUser) {
+      
+      const selectedCountry = this.countries.find(
+        c => c.nameCode === this.currentUser?.country?.value
+      );
       this.buttonText = "Update";
       this.profileForm.patchValue({
         id: this.currentUser.id,
         name: this.currentUser.name,
         lastName: this.currentUser.lastName,
-        country: this.currentUser.country,
+        country: selectedCountry || null,
         email: this.currentUser.email,
         //password: this.currentUser.password, 
         //confirmPassword: this.currentUser.password,
       });
     }
-
   }
 
   async onSubmit() {
     this.isSubmitting = true;
-    console.log('Datos profile:', this.profileForm.value);
 
     const password = this.profileForm.get('password')?.value;
     const confirmPassword = this.profileForm.get('confirmPassword')?.value;
 
     if (password !== confirmPassword) {
-      this.toast.show('Las contraseñas no coinciden', 'danger');
+      this.toast.show('Password mismatch', 'danger');
       this.isSubmitting = false;
       return;
     }
 
     try {
       await new Promise(r => setTimeout(r, 2000));
+      
+      const selectedCountry: ICountry = this.profileForm.get('country')?.value;
+
+      const countryToSave = {
+            id: selectedCountry.name,
+            value: selectedCountry.unicodeFlag + ' ' + selectedCountry.name
+          };
 
       const user: Iuser = {
         id: this.currentUser ? this.currentUser.id : '',
@@ -96,7 +108,7 @@ export class ProfilePage implements OnInit {
         lastName: this.profileForm.get('lastName')?.value,
         email: this.profileForm.get('email')?.value,
         password: password,
-        country: this.profileForm.get('country')?.value,
+        country: countryToSave,
       };
 
       if (this.currentUser) {
@@ -107,7 +119,7 @@ export class ProfilePage implements OnInit {
         );
 
         if (exists) {
-          this.toast.show('Ese correo ya está en uso', 'danger');
+          this.toast.show('This email already exists!', 'danger');
           this.isSubmitting = false;
           return;
         }
@@ -115,47 +127,49 @@ export class ProfilePage implements OnInit {
         const updated = this.userService.updateUser(user);
 
         if (updated) {
-          this.toast.show('Perfil actualizado', 'success');
-          this.router.navigate(['/home']);
+          this.authService.setCurrentUser(user);
+          this.toast.show('Profile updated', 'success');
+          await this.loader.show('Loading...');
+          
+          this.router.navigate(['/home']).then(() => {
+            setTimeout(() => this.loader.hide(), 500);
+          });
         } else {
-          this.toast.show('Error al actualizar', 'danger');
+          this.toast.show('Error updating', 'danger');
         }
       }else{
         const users: Iuser[] = this.userService.getAllUsers() || [];
         const exists = users.some(u => u.email === user.email);
 
         if (exists) {
-          this.toast.show('El correo ya está registrado', 'danger');
+          this.toast.show('This email already exists!', 'danger');
           return;
         }
 
         const res = this.userService.register(user);
 
-        this.toast.show('Registro exitoso', 'success');
-        console.log("Registrado1:", res);
-        console.log("Registrado:", user);
+        this.toast.show('Sign-up successful!', 'success');
 
         this.profileForm.reset();
-
-        this.router.navigate(['/login']);
+        await this.loader.show('Loading...');
+        
+        this.router.navigate(['/login']).then(() => {
+          setTimeout(() => this.loader.hide(), 500);
+        });
       }
 
     } catch (error) {
-      console.error("Error en registro", error);
-      this.toast.show('Error en registro ❌', 'danger');
+      this.toast.show('Error Sign-up', 'danger');
     } finally {
       this.isSubmitting = false;
     }
   }
 
-  onCountrySelected(country: ICountrySelect) {
-    this.profileForm.patchValue({
-      country: {
-        id: country.name,
-        value: country.nameCode
-      }
+  public async goHome(){
+    await this.loader.show('Loading...');
+    
+    this.router.navigate(['/home']).then(() => {
+      setTimeout(() => this.loader.hide(), 500);
     });
-    console.log('Selected country:', this.profileForm.value.country);
   }
-
 }

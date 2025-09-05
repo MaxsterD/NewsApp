@@ -4,3 +4,19 @@
   justify-content: flex-start; 
   align-items: center;         
 }
+
+.card-header {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+}
+
+.card-header ion-button {
+  margin-right: 8px;
+}
+
+.card-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: var(--ion-color-primary);
+}

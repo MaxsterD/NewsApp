@@ -5,6 +5,11 @@ export interface ICountry {
   unicodeFlag: string
 }
 
+export interface ICountryUser {
+  id: string
+  value: string
+}
+
 export interface CountryApiResponse {
   error: boolean;
   msg: string;

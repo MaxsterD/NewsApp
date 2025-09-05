@@ -1,0 +1,11 @@
+<ion-card *ngIf="title" class="article-card">
+  <img *ngIf="image" [src]="image" alt="image" />
+  <ion-card-header>
+    <ion-card-title>{{ title }}</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <p class="description">{{ description }}</p>
+    <small>{{ sourceName }}</small>
+    <a *ngIf="url" class="read-more">Read more →</a>
+  </ion-card-content>
+</ion-card>

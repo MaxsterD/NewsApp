@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder,FormGroup,Validators  } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Toast } from 'src/app/providers/toast/toast';
+import { Auth } from 'src/app/service/auth/auth';
+import { Loader } from 'src/app/service/loader/loader';
 import { User } from 'src/app/service/user/user';
 
 
@@ -16,7 +18,13 @@ export class LoginPage implements OnInit {
   loginForm!: FormGroup;
   isSubmitting = false;
 
-  constructor(private formController: FormBuilder, private toast: Toast, private router: Router,private userService: User) {}
+  constructor(
+    private formController: FormBuilder,
+    private toast: Toast,
+    private router: Router,
+    private userService: User,
+    private authService: Auth,
+    private loader: Loader) {}
   ngOnInit() {
     this.loginForm = this.formController.group({
       email: ['', [Validators.required, Validators.email]],
@@ -36,17 +44,26 @@ export class LoginPage implements OnInit {
         return;
       }
 
+      this.authService.setCurrentUser(user);
+
       this.toast.show(`Bienvenido ${user.name} `, 'success');
       console.log("Usuario logueado:", user);
-
-      this.router.navigate(['/home']);
+      await this.loader.show('Loading...');
+      
+      this.router.navigate(['/home']).then(() => {
+          setTimeout(() => this.loader.hide(), 500);
+      });
       
     } finally {
       this.isSubmitting = false;
     }
   }
     
-    goRegister() {
-      this.router.navigate(['/profile/register']);
+    async goRegister() {
+      await this.loader.show('Loading...');
+      
+      this.router.navigate(['/profile/register']).then(() => {
+          setTimeout(() => this.loader.hide(), 500);
+      });
     }
   }

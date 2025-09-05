@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ article.title }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="close()">
+        <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <img *ngIf="article.urlToImage" [src]="article.urlToImage" alt="image" style="width: 100%; height: 200px; object-fit: cover; margin-bottom: 10px;">
+  <p><strong>Source:</strong> {{ article.source?.name ?? 'Unknown' }}</p>
+  <p><strong>Author:</strong> {{ article.author ?? 'Unknown' }}</p>
+  <p><strong>Published:</strong> {{ article.publishedAt | date:'medium' }}</p>
+  <p>{{ article.description }}</p>
+
+  <ion-button expand="block" (click)="openInBrowser()">Read Full Article</ion-button>
+</ion-content>

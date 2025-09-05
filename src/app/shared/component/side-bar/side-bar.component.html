@@ -1,0 +1,30 @@
+<ion-menu side="end" menuId="first" contentId="main-content">
+  <ion-header>
+    <app-header 
+      [title]="currentUser?.name ?? 'User'" 
+      [color]="'secondary'" 
+      [align]="'start'"
+      [icon]="'person-circle-outline'"
+      [showArrow]="true"
+      (profileClick)="goToProfile()">
+    </app-header>
+  </ion-header>
+
+  <ion-content>
+    <app-list 
+      [items]="categories" 
+      (itemSelected)="onSelect($event)">
+    </app-list>
+
+    <div style="padding: 16px;">
+      <app-button
+        text="Logout"
+        type="button"
+        expand="block"
+        icon="log-out-outline"
+        (click)="logout()">
+      </app-button>
+    </div>
+  </ion-content>
+
+</ion-menu>

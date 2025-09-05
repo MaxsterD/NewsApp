@@ -1,5 +1,13 @@
 <ion-content class="ion-padding">
   <ion-card>
+
+    <div class="card-header" *ngIf="currentUser">
+      <ion-button fill="clear" color="primary" (click)="goHome()">
+        <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+      </ion-button>
+      <span class="card-title">Update Profile</span>
+    </div>
+
     <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
       
       <ion-row>
@@ -25,10 +33,10 @@
         <ion-col size="12">
           <app-select
             [label]="'Country'"
-              [options]="countries"
-              [displayKey]="'nameCode'"
-              (selected)="onCountrySelected($event)"
-          ></app-select>
+            [options]="countries"
+            [displayKey]="'nameCode'"
+            formControlName="country">
+          </app-select>
         </ion-col>
       </ion-row>
 
@@ -65,10 +73,18 @@
         </ion-col>
       </ion-row>
 
+      <div class="ion-text-center" style="margin-top: 1rem;" *ngIf="!currentUser">
+        <app-link 
+          text="¿Don't have an account? Register"
+          route="/profile/register"
+          align="center">
+        </app-link>
+      </div>
+
       <ion-row>
         <ion-col size="12">
           <app-button
-            text="Guardar"
+            [text]="buttonText"
             type="submit"
             expand="block"
             icon="save-outline"

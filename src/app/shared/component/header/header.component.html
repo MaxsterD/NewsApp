@@ -1,0 +1,23 @@
+<ion-header [translucent]="true">
+  <ion-toolbar [color]="color">
+    
+    <ion-buttons slot="end" *ngIf="icon">
+      <ion-button (click)="onProfileClick()">
+        <ion-icon slot="icon-only" [name]="icon"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-title 
+      [class.center]="align === 'center'" 
+      [class.end]="align === 'end'">
+      {{ title }}
+    </ion-title>
+
+    <ion-buttons slot="end" *ngIf="showArrow">
+      <ion-button (click)="onProfileClick()">
+        <ion-icon slot="icon-only" name="chevron-forward-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-header>

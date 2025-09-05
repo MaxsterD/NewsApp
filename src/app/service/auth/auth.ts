@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Iuser } from 'src/app/interfaces/iuser';
 import { Storage } from '../storage/storage';
+import { BehaviorSubject } from 'rxjs';
 
 
 @Injectable({
@@ -11,22 +12,26 @@ export class Auth {
 
   constructor(private storage: Storage) {}
 
+  private currentUserSubject = new BehaviorSubject<Iuser | null>(null);
+  currentUser$ = this.currentUserSubject.asObservable();
   
-  publicsetCurrentUser(user: Iuser) {
+  public setCurrentUser(user: Iuser) {
+    this.currentUserSubject.next(user);
     this.storage.setItem(this.USER_KEY, user);
   }
 
   
-  getCurrentUser(): Iuser | null {
+  public getCurrentUser(): Iuser | null {
     return this.storage.getItem(this.USER_KEY);
   }
 
   
-  isAuthenticated(): boolean {
+  public isAuthenticated(): boolean {
     return !!this.getCurrentUser();
   }
 
-  logout() {
+  public logout() {
+    this.currentUserSubject.next(null);
     this.storage.removeItem(this.USER_KEY);
   }
 }
