@@ -22,7 +22,7 @@
     [title]="mainArticle.title"
     [description]="mainArticle.description"
     [image]="mainArticle.urlToImage"
-    [sourceName]="mainArticle.source?.name ?? ''"
+    [sourceName]="mainArticle.source.name"
     (click)="openArticleModal(mainArticle)">
   </app-main-article>
 
@@ -33,7 +33,7 @@
           [title]="article.title"
           [description]="article.description"
           [image]="article.urlToImage"
-          [sourceName]="article.source?.name ?? ''"
+          [sourceName]="article.source.name"
           [url]="article.url"
           (click)="openArticleModal(article)">
         </app-article>
