@@ -23,8 +23,7 @@ export class LoginPage implements OnInit {
     private toast: Toast,
     private router: Router,
     private userService: User,
-    private authService: Auth,
-    private loader: Loader) {}
+    private authService: Auth) {}
   ngOnInit() {
     this.loginForm = this.formController.group({
       email: ['', [Validators.required, Validators.email]],
@@ -47,23 +46,12 @@ export class LoginPage implements OnInit {
       this.authService.setCurrentUser(user);
 
       this.toast.show(`Bienvenido ${user.name} `, 'success');
-      console.log("Usuario logueado:", user);
-      await this.loader.show('Loading...');
       
-      this.router.navigate(['/home']).then(() => {
-          setTimeout(() => this.loader.hide(), 500);
-      });
+      this.router.navigate(['/home']);
       
     } finally {
       this.isSubmitting = false;
     }
   }
     
-    async goRegister() {
-      await this.loader.show('Loading...');
-      
-      this.router.navigate(['/profile/register']).then(() => {
-          setTimeout(() => this.loader.hide(), 500);
-      });
-    }
   }

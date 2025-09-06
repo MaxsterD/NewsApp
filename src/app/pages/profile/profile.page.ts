@@ -53,7 +53,7 @@ export class ProfilePage implements OnInit {
       this.countries = res.data.map(c => ({
         ...c,
         nameCode: `${c.unicodeFlag} ${c.name}`
-      }));
+      })).sort((a, b) => a.name.localeCompare(b.name));
 
 
       console.log('Countries:', this.countries);
