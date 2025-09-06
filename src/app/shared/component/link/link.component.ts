@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { Loader } from 'src/app/service/loader/loader';
+import { Loader } from 'src/app/providers/loader/loader';
 
 @Component({
   selector: 'app-link',

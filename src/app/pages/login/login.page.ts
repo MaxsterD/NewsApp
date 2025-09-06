@@ -3,7 +3,7 @@ import { FormBuilder,FormGroup,Validators  } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Toast } from 'src/app/providers/toast/toast';
 import { Auth } from 'src/app/service/auth/auth';
-import { Loader } from 'src/app/service/loader/loader';
+import { Loader } from 'src/app/providers/loader/loader';
 import { User } from 'src/app/service/user/user';
 
 

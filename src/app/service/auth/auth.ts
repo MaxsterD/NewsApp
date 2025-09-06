@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Iuser } from 'src/app/interfaces/iuser';
-import { Storage } from '../storage/storage';
+import { Storage } from '../../providers/storage/storage';
 import { BehaviorSubject } from 'rxjs';
 
 

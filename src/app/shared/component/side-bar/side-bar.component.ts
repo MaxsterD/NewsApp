@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { IonMenu } from '@ionic/angular';
 import { ICategory } from 'src/app/interfaces/inews';
 import { Auth } from 'src/app/service/auth/auth';
-import { Loader } from 'src/app/service/loader/loader';
+import { Loader } from 'src/app/providers/loader/loader';
 
 @Component({
   selector: 'app-side-bar',

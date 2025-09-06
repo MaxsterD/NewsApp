@@ -5,8 +5,8 @@ import { CountryApiResponse, ICountry, ICountrySelect } from 'src/app/interfaces
 import { Iuser } from 'src/app/interfaces/iuser';
 import { Toast } from 'src/app/providers/toast/toast';
 import { Auth } from 'src/app/service/auth/auth';
-import { HttpService } from 'src/app/service/http/http-service';
-import { Loader } from 'src/app/service/loader/loader';
+import { HttpService } from 'src/app/providers/http/http-service';
+import { Loader } from 'src/app/providers/loader/loader';
 import { User } from 'src/app/service/user/user';
 
 @Component({

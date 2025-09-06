@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ICategory, INews, INewsResponse } from 'src/app/interfaces/inews';
-import { HttpService } from 'src/app/service/http/http-service';
+import { HttpService } from 'src/app/providers/http/http-service';
 import { environment } from 'src/environments/environment';
 import { IonMenu, ModalController } from "@ionic/angular";
 import { SideBarComponent } from 'src/app/shared/component/side-bar/side-bar.component';
 import { Router } from '@angular/router';
-import { Loader } from 'src/app/service/loader/loader';
+import { Loader } from 'src/app/providers/loader/loader';
 import { ModalComponent } from 'src/app/shared/component/modal/modal.component';
 
 @Component({

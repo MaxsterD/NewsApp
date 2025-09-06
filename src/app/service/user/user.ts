@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Storage } from '../storage/storage';
+import { Storage } from '../../providers/storage/storage';
 import { Iuser } from 'src/app/interfaces/iuser';
 import { v4 as uuidv4 } from 'uuid';
-import { Encrypt } from '../encrypt/encrypt';
+import { Encrypt } from '../../providers/encrypt/encrypt';
 
 @Injectable({
   providedIn: 'root'
